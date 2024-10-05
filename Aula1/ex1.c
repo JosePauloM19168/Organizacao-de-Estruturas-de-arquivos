@@ -1,4 +1,4 @@
-//aula 1 primeira versão
+//exercício 1: contar quantas linhas tem um arquivo. Usar o copia1. Basta contar quantas vezes aparece a quebra linha. '\n'
 //gcc -o ex1 ex1.c
 //./ex1 aula.txt aula1.txt
 
