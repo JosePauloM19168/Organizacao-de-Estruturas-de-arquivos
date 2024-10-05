@@ -1,4 +1,7 @@
 //aula 1 primeira versão
+//gcc -o ex1 ex1.c
+//./ex1 aula.txt aula1.txt
+
 
 #include <stdio.h>
 
