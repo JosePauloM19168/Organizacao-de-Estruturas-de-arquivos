@@ -1,4 +1,8 @@
-#include <stdio.h>
+//copia o conteudo do documento 1 para o documento 2
+//gcc -o copia1 copia1.c
+// ./copia1 aula.txt aula1.txt
+
+]#include <stdio.h>
 
 // stdout, stdin, stderr
 
