@@ -1,7 +1,8 @@
 //exercício 2: contar a frequência de cada símbolo no arquivo. Também baseado no copia1. 
 //Criar uma array com contadores para cada uma dos possíveis símbolos (256 ou de 0 a 255) e para cada símbolo lido acumular. Mostrar a tabela na saída padrão. 
+
 // gcc -o ex2 ex2.c
-// ./ex1 aula.txt
+// ./ex2 aula.txt
 
 #include <stdio.h>
 
