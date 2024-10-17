@@ -15,7 +15,7 @@ typedef struct {
 void incluirProduto(Produto produto){
     FILE* file;    
     file = fopen("estoque.bin", "r+b");
-    fseek(file, sizeof(Produto), SEEK_END);
+    fseek(file, 0, SEEK_END);
     fwrite(&produto, sizeof(Produto), 1, file);
     fclose(file);
 };
@@ -23,19 +23,24 @@ void incluirProduto(Produto produto){
 
 void buscarProduto(int b, Produto produto){
     FILE* file;    
+    Produto produtoLeitura;
+    
     file = fopen("estoque.bin", "r+b");
     fseek(file, (b * sizeof(Produto)), SEEK_SET);
-    printf("%c %d %d %f", produto.descricao, produto.quantidadeEstoque, produto.minimoEstoque, produto.precoVenda);
+    fread(&produtoLeitura, sizeof(Produto), 1, file);
+
+    printf("%s %d %d %f", produtoLeitura.descricao, produtoLeitura.quantidadeEstoque, produtoLeitura.minimoEstoque, produtoLeitura.precoVenda);
+    
     fclose(file);
 };
 
-void registrarVenda(Produto produto){
+void registrarVenda(int i, Produto produto){
     FILE* file;    
     file = fopen("estoque.bin", "r+b");
     fclose(file);
 };
 
-void relatorioEstoqueMinimo(Produto produto){
+void relatorioEstoqueMinimo(){
     FILE* file;    
     file = fopen("estoque.bin", "r+b");
     fclose(file);
@@ -56,23 +61,30 @@ void exibirMenu(Produto produto){
 
 
 int main() {
-    int opcao;
+    int opcao, i;
 
     do {
-        exibirMenu();
         printf("Escolha uma opcao: ");
-        scanf("%d", &opcao);
-        limparBuffer(); 
+        i = scanf("%d", &opcao);
+        //limparBuffer(); 
 
+        Produto produto;
+        strcpy(produto.descricao, "descricao");
+        produto.quantidadeEstoque = 1;
+        produto.minimoEstoque = 2;
+        produto.precoVenda = 3;
+
+        exibirMenu(produto);
+        
         switch(opcao) {
             case 1:
-                incluirProduto();
+                incluirProduto(produto);
                 break;
             case 2:
-                buscarProduto();
+                buscarProduto(99, produto);
                 break;
             case 3:
-                registrarVenda();
+                registrarVenda(3, produto);
                 break;
             case 4:
                 relatorioEstoqueMinimo();
