@@ -1,3 +1,5 @@
+//gcc -o trab1 trab1.c && ./trab1 trab1.c
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
