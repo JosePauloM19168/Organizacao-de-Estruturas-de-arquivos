@@ -29,14 +29,29 @@ void buscarProduto(int b, Produto produto){
     fseek(file, (b * sizeof(Produto)), SEEK_SET);
     fread(&produtoLeitura, sizeof(Produto), 1, file);
 
-    printf("%s %d %d %f", produtoLeitura.descricao, produtoLeitura.quantidadeEstoque, produtoLeitura.minimoEstoque, produtoLeitura.precoVenda);
+    printf("%s %d %d %f \n", produtoLeitura.descricao, produtoLeitura.quantidadeEstoque, produtoLeitura.minimoEstoque, produtoLeitura.precoVenda);
     
     fclose(file);
 };
 
-void registrarVenda(int i, Produto produto){
+void registrarVenda(int quantidade, int cd_produto, Produto produto){
     FILE* file;    
+    Produto produtoLeitura;
     file = fopen("estoque.bin", "r+b");
+
+    fseek(file, (cd_produto * sizeof(Produto)), SEEK_SET);
+    fread(&produtoLeitura, sizeof(Produto), 1, file);
+
+    if (quantidade > produtoLeitura.quantidadeEstoque) {
+        printf("Quantidade em estoque insuficiente para a venda.\n");
+        return;
+    }
+
+    produtoLeitura.quantidadeEstoque -= quantidade;
+
+    fseek(file, (cd_produto * sizeof(Produto)), SEEK_SET);
+    fwrite(&produtoLeitura, sizeof(Produto), 1, file);
+    
     fclose(file);
 };
 
@@ -81,10 +96,12 @@ int main() {
                 incluirProduto(produto);
                 break;
             case 2:
-                buscarProduto(99, produto);
+                printf("insira o código do produto: ");
+                scanf("%d", &i);
+                buscarProduto(i, produto);
                 break;
             case 3:
-                registrarVenda(3, produto);
+                registrarVenda(1, 11, produto);
                 break;
             case 4:
                 relatorioEstoqueMinimo();
