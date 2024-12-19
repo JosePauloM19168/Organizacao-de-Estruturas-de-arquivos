@@ -1,0 +1,67 @@
+import struct
+
+def unpackLinha(linha):
+    tupla = hashFormat.unpack(linha)
+    n = tupla[0]
+    chaves = []
+    posicoes = []
+    for i in range(1,n+1):
+        chaves.append(tupla[i])
+    for i in range(size+1,size+1+n):
+        posicoes.append(tupla[i])
+    return chaves, posicoes
+
+def packLinha(chaves, posicoes):
+    n = len(chaves)
+    parametros = [n]
+    for i in range(0,size):
+        if i < n:
+            parametros.append(chaves[i])
+        else:
+            parametros.append(0)
+    for i in range(0,size):
+        if i < n:
+            parametros.append(posicoes[i])
+        else:
+            parametros.append(0)
+    return hashFormat.pack(*parametros)
+
+
+# Escolher um numero magico #983
+# vazio = packLinha([],[])
+# escreve em um arquivo binario numero magico vezes vazio
+# reabre leitura escrita o indice. Abre o arquivo de dados
+# Para cada endereco no arquivo de dados.
+# p = h(cep)
+# seek no arquivo de indice
+# le linha
+# seek denovo
+# chaves, posicoes = unpack(linha)
+# se len(chaves) == 1000 -> Ignora.
+# senao chaves.append(cep), posicoes.append(numero do registro)
+# escreve no indice packLinha(chaves, posicoes)
+# Fim do for e tchau
+
+'''chaves = [1,2,3]
+posicoes = [4,5,6]
+binario = packLinha(chaves,posicoes)
+print(binario)
+chaves2, posicoes2 = unpackLinha(binario)
+print(chaves2)
+print(posicoes2)'''
+
+#vazio = packLinha([],[])
+size  = 1000
+hashFormat = struct.Struct(f"i{size}l{size}l")
+
+indexName = 'pack.dat'
+cepName = 'cep.dat'
+
+hashSize = 983
+vazio = packLinha([],[])
+    
+
+with open(indexName,"wb") as fi:
+    for i in range(0,hashSize):
+        fi.write(vazio)
+
