@@ -1,0 +1,44 @@
+#include "ArvoreB.h"
+#include <stdio.h>
+typedef struct _Endereco Endereco;
+
+struct _Endereco
+{
+	char logradouro[72];
+	char bairro[72];
+	char cidade[72];
+	char uf[72];
+	char sigla[2];
+	char cep[8];
+	char lixo[2]; // Ao Espaço no final da linha + quebra de linha
+};
+
+
+int main(int argc, char** argv)
+{
+
+	FILE *f;
+	Endereco e;
+	f = fopen("cep.dat","rb");
+	
+    ArvoreB* a = ArvoreB_Abre("arvore.dat");
+    char chave[TAM_CHAVE+1];
+    long posicao;
+    int i;
+
+    for(i=0; i<1000; i++)
+    {
+    	fread(&e,sizeof(Endereco),1,f);
+    	
+        //sprintf(chave,"%08d",i);
+        posicao = i;
+        ArvoreB_Insere(a, e.cep, posicao);
+    }
+
+    ArvoreB_PrintDebug(a);
+
+    ArvoreB_Fecha(a);
+    fclose(f);
+    
+    return 0;
+}
